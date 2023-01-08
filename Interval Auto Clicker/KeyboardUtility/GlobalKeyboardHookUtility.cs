@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace Interval_Auto_Clicker.KeyboardUtility
 {
+    /**
+     * Algorithm for using native windows hooks
+     * taken from https://stackoverflow.com/questions/604410/global-keyboard-capture-in-c-sharp-application
+     */
     internal class GlobalKeyboardHookUtility
     {
 
