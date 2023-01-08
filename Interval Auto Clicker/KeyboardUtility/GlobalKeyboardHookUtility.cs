@@ -36,11 +36,31 @@ namespace Interval_Auto_Clicker.KeyboardUtility
         private IntPtr SetHook(LowLevelKeyboardProc proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())
-            using (ProcessModule curModule = curProcess.MainModule)
+            using (ProcessModule? curModule = curProcess.MainModule)
             {
-                Debug.WriteLine("Hook set for current process and module.");
-                return SetWindowsHookEx(WH_KEYBOARD_LL, proc,
-                    GetModuleHandle(curModule.ModuleName), 0);
+                if (curModule != null)
+                {
+                    Debug.WriteLine("Hook set for current process and module.");
+                    string? moduleName = curModule.ModuleName;
+                    if (moduleName != null)
+                    {
+                        IntPtr moduleHandle = GetModuleHandle(moduleName);
+                        return SetWindowsHookEx(
+                            WH_KEYBOARD_LL,
+                            proc,
+                            moduleHandle,
+                            0
+                        );
+                    }
+                    else
+                    {
+                        return IntPtr.Zero;
+                    }
+                }
+                else
+                {
+                    return IntPtr.Zero;
+                }
             }
         }
 
