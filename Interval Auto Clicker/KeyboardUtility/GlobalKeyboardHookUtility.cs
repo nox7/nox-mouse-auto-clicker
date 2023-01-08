@@ -33,6 +33,11 @@ namespace Interval_Auto_Clicker.KeyboardUtility
             _hookID = SetHook(_proc);
         }
 
+        public void unbindHooks()
+        {
+            UnhookWindowsHookEx(_hookID);
+        }
+
         private IntPtr SetHook(LowLevelKeyboardProc proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())

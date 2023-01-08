@@ -24,10 +24,11 @@ namespace Interval_Auto_Clicker
     public partial class MainWindow : Window
     {
         public bool isRunning = false;
+        internal GlobalKeyboardHookUtility hookUtility;
 
         public MainWindow()
         {
-            new GlobalKeyboardHookUtility(this);
+            hookUtility = new GlobalKeyboardHookUtility(this);
             InitializeComponent();
         }
 
@@ -43,6 +44,12 @@ namespace Interval_Auto_Clicker
                 // Ignore, it's already running.
                 Debug.WriteLine("Cannot start. Already running.");
             }
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            hookUtility.unbindHooks();
+            // e.Cancel = true;
         }
     }
 }
